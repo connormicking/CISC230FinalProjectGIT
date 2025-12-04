@@ -1,7 +1,14 @@
 package final_project;
 
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.*;
+
+
 public class GameDriver {
-	public static void main(String[] args) {
-		System.out.println("Hello World");
+	public void start(Stage ps) {
+		
 	}
 }
