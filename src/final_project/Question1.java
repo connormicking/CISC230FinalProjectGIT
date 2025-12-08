@@ -10,12 +10,15 @@ package final_project;
 * 
 */
 public class Question1 {
+	private String category;
 	private String questionString;
 	private String[] answers;
+	private String explanation;
 	private char correctAnswer;
-	private int correctAnswerIndex;
 	private int points;
 	private Type type;
+	
+	/// Type enum for creating either multiple choice or true/false questions. Each have a set point score.
 	enum Type {MULTIPLE_CHOICE(10), TRUE_FALSE(5);
 		private int points;
 		Type(int points) {
@@ -28,25 +31,22 @@ public class Question1 {
 		
 	}
 	
-	public Question1(String questionString, String[] answers, Type type, char correctAnswer) {
+	public Question1(String category, String questionString, String[] answers, String explanation, Type type, char correctAnswer) {
+		this.category = category;
 		this.questionString = questionString;
 		this.answers = answers;
 		this.type = type;
-		points = type.getPoints();
 		this.correctAnswer = correctAnswer;
-		correctAnswerIndex = returnIndex(correctAnswer);
+		this.explanation = explanation;
+		points = type.getPoints();
 	}
 	
-	private int returnIndex(char ans) {
-			switch (ans) {
-			case 'A': return 0;
-			case 'B': return 1;
-			case 'C': return 2;
-			case 'D': return 3;
-			case 'T': return 0;
-			case 'F': return 1;
-			default: return -1;
-		}
+	public String getCategory() {
+		return category;
+	}
+	
+	public String getExplanation() {
+		return explanation;
 	}
 	
 	public String getQuestionString() {
@@ -61,8 +61,8 @@ public class Question1 {
 		return points;
 	}
 	
-	public int getCorrectAnswerIndex() {
-		return correctAnswerIndex;
+	public char getCorrectAnswer() {
+		return correctAnswer;
 	}
 	
 	public Type getType() {
