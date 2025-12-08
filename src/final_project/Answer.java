@@ -22,5 +22,4 @@ public class Answer {
 	public void addQuestion(Question question) {
 		questions.add(question);
 	}
-	
 }
