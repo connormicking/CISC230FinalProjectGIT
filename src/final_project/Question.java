@@ -1,8 +1,57 @@
 package final_project;
-
+/*
+* File: Question.java
+* Author: Connor King
+* Course: CISC230
+* Lab: Group Sustainability Lab
+* Date: 12/7/2025
+*
+* Description:	
+* 
+*/
 public class Question {
-	enum Type {MULTIPLE_CHOICE, TRUE_FALSE}
+	private String questionString;
+	private String[] answers;
+	private int correctAnswerIndex;
+	private int points;
+	private Type type;
+	enum Type {MULTIPLE_CHOICE(10), TRUE_FALSE(5);
+		private int points;
+		Type(int points) {
+			this.points = points;
+		}
+		
+		int getPoints() {
+			return this.points;
+		}
+		
+	}
 	
+	public Question(String questionString, String[] answers, Type type, int correctAnswerIndex) {
+		this.questionString = questionString;
+		this.answers = answers;
+		this.type = type;
+		this.correctAnswerIndex = correctAnswerIndex;
+		points = type.getPoints();
+	}
 	
+	public String getQuestionString() {
+		return questionString;
+	}
 	
+	public String[] getAnswers() {
+		return answers;
+	}
+	
+	public int getPoints() {
+		return points;
+	}
+	
+	public int getCorrectAnswerIndex() {
+		return correctAnswerIndex;
+	}
+	
+	public Type getType() {
+		return type;
+	}
 }

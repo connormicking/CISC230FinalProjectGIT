@@ -33,7 +33,7 @@ public class Leaderboard implements Showable {
 	
 	/// Method for creating and returning a scene to be shown via the Javafx GUI.
 	public Scene getScene() {
-		// Code still needs to be implemented as to create a scene
+		// TO-DO: Code still needs to be implemented as to create a scene (currently blank)
 		Pane pane = new Pane();
 		Scene scene = new Scene(pane,400,400);
 		return scene;

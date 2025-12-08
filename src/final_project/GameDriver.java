@@ -104,7 +104,7 @@ public class GameDriver extends Application {
 		ps.show();
 	}
 
-	/// Method for handling when the user clicks the start button
+	/// Method for handling when the user clicks the start button (unfinished)
 	public void startButtonClick(ActionEvent event) {
 		Text text = new Text("Test window after clicking start.\n This will use the scene created in a MemoryGame child class");
 		FlowPane pane = new FlowPane(text);
@@ -112,7 +112,7 @@ public class GameDriver extends Application {
 		stage.setScene(testScene);
 	}
 	
-	/// Method for showing game info when the user clicks the info button
+	/// Method for showing game info when the user clicks the info button (unfinished)
 	public void infoButtonClick(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
