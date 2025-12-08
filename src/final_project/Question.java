@@ -12,6 +12,7 @@ package final_project;
 public class Question {
 	private String questionString;
 	private String[] answers;
+	private char correctAnswer;
 	private int correctAnswerIndex;
 	private int points;
 	private Type type;
@@ -27,12 +28,25 @@ public class Question {
 		
 	}
 	
-	public Question(String questionString, String[] answers, Type type, int correctAnswerIndex) {
+	public Question(String questionString, String[] answers, Type type, char correctAnswer) {
 		this.questionString = questionString;
 		this.answers = answers;
 		this.type = type;
-		this.correctAnswerIndex = correctAnswerIndex;
 		points = type.getPoints();
+		this.correctAnswer = correctAnswer;
+		correctAnswerIndex = returnIndex(correctAnswer);
+	}
+	
+	private int returnIndex(char ans) {
+			switch (ans) {
+			case 'A': return 0;
+			case 'B': return 1;
+			case 'C': return 2;
+			case 'D': return 3;
+			case 'T': return 0;
+			case 'F': return 1;
+			default: return -1;
+		}
 	}
 	
 	public String getQuestionString() {
