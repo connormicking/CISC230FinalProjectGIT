@@ -42,7 +42,7 @@ public class Answer {
 	public void loadQuestions(File file, Question1.Type type) throws FileNotFoundException {
 		Scanner scan = new Scanner(file);
 		String questionString;
-		String category = "default";
+		String topic;
 		String explanation = "default";
 		char correctAnswer;
 		int length;
@@ -62,7 +62,7 @@ public class Answer {
 
 		
 		while (scan.hasNextLine()) {
-			// category = scan.nextLine();
+			topic = scan.nextLine();
 			questionString = scan.nextLine();
 			for (int i = 0; i < length; i++) {
 				answers[i] = scan.nextLine();
@@ -77,7 +77,7 @@ public class Answer {
 			}
 			else
 				correctAnswer = correctLine.charAt(0);
-			Question1 question = new Question1(category,questionString,answers,explanation,type,correctAnswer);
+			Question1 question = new Question1(topic,questionString,answers,explanation,type,correctAnswer);
 			questionList.add(question);
 			gameQuestionList.add(question);
 		}

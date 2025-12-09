@@ -10,7 +10,7 @@ package final_project;
 * 
 */
 public class Question1 {
-	private String category;
+	private String topic;
 	private String questionString;
 	private String[] answers;
 	private String explanation;
@@ -31,8 +31,8 @@ public class Question1 {
 		
 	}
 	
-	public Question1(String category, String questionString, String[] answers, String explanation, Type type, char correctAnswer) {
-		this.category = category;
+	public Question1(String topic, String questionString, String[] answers, String explanation, Type type, char correctAnswer) {
+		this.topic = topic;
 		this.questionString = questionString;
 		this.answers = answers;
 		this.type = type;
@@ -41,8 +41,8 @@ public class Question1 {
 		points = type.getPoints();
 	}
 	
-	public String getCategory() {
-		return category;
+	public String getTopic() {
+		return topic;
 	}
 	
 	public String getExplanation() {

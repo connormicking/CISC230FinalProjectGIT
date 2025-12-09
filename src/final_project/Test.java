@@ -21,6 +21,7 @@ public class Test {
 		answerManager.loadQuestions(file, Question1.Type.TRUE_FALSE);
 		
 		for (Question1 question : answerManager.getMultipleChoiceQuestions()) {
+			System.out.println(question.getTopic() + ":");
 			System.out.println(question);
 			for (String answerLine : question.getAnswers()) {
 				System.out.println(answerLine);
@@ -29,6 +30,7 @@ public class Test {
 		}
 	
 		for (Question1 question : answerManager.getTrueFalseQuestions()) {
+			System.out.println(question.getTopic() + ":");
 			System.out.println(question);
 			for (String answerLine : question.getAnswers()) {
 				System.out.println(answerLine);
