@@ -16,11 +16,11 @@ public class Test {
 	public static void main(String[] args) throws FileNotFoundException {
 		Answer answerManager = new Answer();
 		File file = new File("src/final_project/MCQuestions.txt");
-		answerManager.loadQuestions(file, Question1.Type.MULTIPLE_CHOICE);
+		answerManager.loadQuestions(file, Question.Type.MULTIPLE_CHOICE);
 		file = new File("src/final_project/TFQuestions.txt");
-		answerManager.loadQuestions(file, Question1.Type.TRUE_FALSE);
+		answerManager.loadQuestions(file, Question.Type.TRUE_FALSE);
 		
-		for (Question1 question : answerManager.getMultipleChoiceQuestions()) {
+		for (Question question : answerManager.getMultipleChoiceQuestions()) {
 			System.out.println(question.getTopic() + ":");
 			System.out.println(question);
 			for (String answerLine : question.getAnswers()) {
@@ -29,7 +29,7 @@ public class Test {
 			System.out.println("===============================================");
 		}
 	
-		for (Question1 question : answerManager.getTrueFalseQuestions()) {
+		for (Question question : answerManager.getTrueFalseQuestions()) {
 			System.out.println(question.getTopic() + ":");
 			System.out.println(question);
 			for (String answerLine : question.getAnswers()) {
