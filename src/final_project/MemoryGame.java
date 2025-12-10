@@ -1,99 +1,151 @@
 package final_project;
 
-import java.util.*;
-import java.io.*;
 import javafx.scene.Scene;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.geometry.Pos;
+
+
 /*
-* File: GameDriver.java
-* Author: Zuefeng Xiong 
+* File: MemoryGame.java
+* Author: Zuefeng Xiong and Daniel Grib
 * Course: CISC230
 * Lab: Group Sustainability Lab
-* Date: 12/8/2025
+* Date: 12/10/2025
 *
-* Description:	Class to use as parent for the normal and time-based modes of the memory match game. This will implement the necessary methods whilst creating abstract
-* 				methods for implementations specific to the child classes.
-* 
+* Description: This class generates the grid itself and
+* 				does most of the function controls.
+* 				Easy, Medium, and Hard are all classes that alter the MemoryGame class.
 */
-public abstract class MemoryGame implements Showable {
 
-    ArrayList<Question> questionBank;
+public abstract class MemoryGame implements Showable {
+    protected Scene gameScene;
+    protected GridPane grid;
+
+    protected Rectangle firstCard = null;
+    protected Rectangle secondCard = null;
+
+    protected HashMap<Rectangle, Integer> cardValues = new HashMap<>();
+    protected int[] shuffledValues = new int[16]; // 8 pairs (1-8 twice)
 
     public MemoryGame() {
-        questionBank = new ArrayList<>();
-        loadTrueFalse("TFQuestions.txt");
-        loadMultipleChoice("MCQuestions.txt");
+        generateCardPairs();
+        buildGridUI();
     }
 
-    //Loads True/False questions
-    void loadTrueFalse(String filename) {
-        try {
-            Scanner scan = new Scanner(new File(filename));
+    // -----------------------
+    // GRID + SCENE CREATION
+    // -----------------------
 
-            while (scan.hasNextLine()) {
-                String category = scan.nextLine().trim();
-                if (category.isEmpty()) continue; // skip extra blank lines
+    private void generateCardPairs() {
+        // Values 1–8 twice (pairs)
+        for (int i = 0; i < 16; i++) {
+            shuffledValues[i] = (i / 2) + 1;
+        }
 
-                String question = scan.nextLine().trim();
-                String trueText = scan.nextLine().trim();
-                String falseText = scan.nextLine().trim();
-                String correct = scan.nextLine().trim();
-
-                // store using your Question class
-                String[] options = { trueText, falseText };
-
-                questionBank.add(new Question(
-                    category,
-                    Question.Type.TRUE_FALSE,
-                    question,
-                    options,
-                    correct,
-                    ""   // explanation for the answer (if needed)
-                ));
-            }
-            scan.close();
-
-        } catch (Exception e) {
-            System.out.println("ERROR loading True/False file: " + e.getMessage());
+        // Shuffle
+        Random rand = new Random();
+        for (int i = 15; i > 0; i--) {
+            int j = rand.nextInt(i + 1);
+            int temp = shuffledValues[i];
+            shuffledValues[i] = shuffledValues[j];
+            shuffledValues[j] = temp;
         }
     }
 
-    // Loads Multiple-Choice questions
-    void loadMultipleChoice(String filename) {
-        try {
-            Scanner scan = new Scanner(new File(filename));
+    protected void buildGridUI() {
+        grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(15);
+        grid.setVgap(15);
 
-            while (scan.hasNextLine()) {
-                String category = scan.nextLine().trim();
-                if (category.isEmpty()) continue;
+        int index = 0;
 
-                String question = scan.nextLine().trim();
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 4; col++) {
 
-                String A = scan.nextLine().trim().substring(3); // remove "A. "
-                String B = scan.nextLine().trim().substring(3);
-                String C = scan.nextLine().trim().substring(3);
-                String D = scan.nextLine().trim().substring(3);
+                Rectangle card = new Rectangle(100, 100);
+                card.setFill(Color.DARKGRAY);
+                card.setStroke(Color.BLACK);
 
-                String correct = scan.nextLine().trim();
+                int val = shuffledValues[index];
+                cardValues.put(card, val);
 
-                String[] options = { A, B, C, D };
+                card.setOnMouseClicked(e -> handleCardClick(card));
 
-                questionBank.add(new Question(
-                    category,
-                    Question.Type.MULTIPLE_CHOICE,
-                    question,
-                    options,
-                    correct,
-                    ""
-                ));
+                grid.add(card, col, row);
+                index++;
             }
-            scan.close();
-
-        } catch (Exception e) {
-            System.out.println("ERROR loading MC file: " + e.getMessage());
         }
+
+        BorderPane root = new BorderPane();
+        root.setCenter(grid);
+
+        gameScene = new Scene(root, 600, 600);
     }
-    
+
     @Override
-    public abstract Scene getScene();
-    public abstract void askQuestion(Question unused);
+    public Scene getScene() {
+        return gameScene;
+    }
+
+    // -----------------------
+    // CARD FLIP + MATCH LOGIC
+    // -----------------------
+
+    private void handleCardClick(Rectangle card) {
+        if (firstCard == null) {
+            firstCard = card;
+            reveal(card);
+            return;
+        }
+        else if (secondCard == null && card != firstCard) {
+            secondCard = card;
+            reveal(card);
+            checkMatch();
+        }
+    }
+
+    protected void reveal(Rectangle card) {
+        card.setFill(Color.LIGHTBLUE);
+    }
+
+    protected void hide(Rectangle card) {
+        card.setFill(Color.DARKGRAY);
+    }
+
+    private void checkMatch() {
+        int v1 = cardValues.get(firstCard);
+        int v2 = cardValues.get(secondCard);
+
+        if (v1 == v2) {
+            askQuestion();
+
+            firstCard = null;
+            secondCard = null;
+        } else {
+            // not a match → hide both after short delay
+            Timer t = new Timer();
+            t.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    javafx.application.Platform.runLater(() -> {
+                        hide(firstCard);
+                        hide(secondCard);
+                        firstCard = null;
+                        secondCard = null;
+                    });
+                }
+            }, 600);
+        }
+    }
+
+    public abstract void askQuestion();
 }

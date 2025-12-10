@@ -1,7 +1,7 @@
 package final_project;
 /*
-* File: Question1.java
-* Author: Connor King
+* File: Question.java
+* Author: Neftalem Sida and Connor King
 * Course: CISC230
 * Lab: Group Sustainability Lab
 * Date: 12/7/2025
