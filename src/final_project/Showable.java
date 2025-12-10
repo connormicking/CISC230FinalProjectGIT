@@ -2,7 +2,7 @@ package final_project;
 
 import javafx.scene.Scene;
 /*
-* File: GameDriver.java
+* File: Showable.java
 * Author: Connor King
 * Course: CISC230
 * Lab: Group Sustainability Lab

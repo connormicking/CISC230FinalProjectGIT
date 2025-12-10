@@ -1,6 +1,8 @@
 package final_project;
+
 import java.util.*;
 import java.io.*;
+import javafx.scene.Scene;
 /*
 * File: GameDriver.java
 * Author: Zuefeng Xiong 
@@ -91,5 +93,7 @@ public abstract class MemoryGame implements Showable {
         }
     }
     
-
+    @Override
+    public abstract Scene getScene();
+    public abstract void askQuestion(Question unused);
 }
