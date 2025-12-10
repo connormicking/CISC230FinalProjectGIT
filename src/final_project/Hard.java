@@ -23,7 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class TimedMode extends MemoryGame {
+public class Hard extends MemoryGame {
 
     private int totalTime;
     private int timeRemaining;
@@ -41,7 +41,7 @@ public class TimedMode extends MemoryGame {
 
     private Answer answerManager;
 
-    public TimedMode(Scene scene, Label timerLabel, Label scoreLabel, int totalTimeSeconds) {
+    public Hard(Scene scene, Label timerLabel, Label scoreLabel, int totalTimeSeconds) {
         super();
         this.gameScene = scene;
         this.timerLabel = timerLabel;

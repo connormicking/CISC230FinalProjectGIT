@@ -14,7 +14,7 @@ import java.util.Scanner;
 *StandardMode:
 * Players answer questions at their own pace.
 */
-public class StandardMode extends MemoryGame {
+public class Medium extends MemoryGame {
 
     Scanner input = new Scanner(System.in);
 
