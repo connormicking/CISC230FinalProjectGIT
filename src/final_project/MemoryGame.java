@@ -5,6 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -34,6 +37,7 @@ public abstract class MemoryGame implements Showable {
     protected Rectangle secondCard = null;
 
     protected HashMap<Rectangle, Integer> cardValues = new HashMap<>();
+    protected HashMap<Rectangle, Text> symbols = new HashMap<>();
     protected int[] shuffledValues = new int[16]; // 8 pairs (1-8 twice)
 
     protected BorderPane root;
@@ -66,6 +70,20 @@ public abstract class MemoryGame implements Showable {
             shuffledValues[j] = temp;
         }
     }
+    
+    private String getSymbolForValue(int v) {
+        switch (v) {
+            case 1: return "★";   // star
+            case 2: return "◆";   // diamond
+            case 3: return "♥";   // heart
+            case 4: return "♣";   // club
+            case 5: return "♠";   // spade
+            case 6: return "☀";   // sun
+            case 7: return "⚑";   // flag
+            case 8: return "✿";   // flower
+            default: return "?";
+        }
+    }
 
     protected void buildGridUI() {
         grid = new GridPane();
@@ -87,7 +105,21 @@ public abstract class MemoryGame implements Showable {
 
                 card.setOnMouseClicked(e -> handleCardClick(card));
 
-                grid.add(card, col, row);
+                StackPane cardPane = new StackPane();
+                cardPane.getChildren().add(card);
+
+                // Create symbol text (hidden at start)
+                Text symbol = new Text(getSymbolForValue(val));
+                symbol.setVisible(false);
+                symbol.setFont(Font.font("System", FontWeight.BOLD, 60));
+
+                cardPane.getChildren().add(symbol);
+
+                // Store symbol in a map so we can reveal/hide it later
+                symbols.put(card, symbol);
+                
+                grid.add(cardPane, col, row);
+                
                 index++;
             }
         }
@@ -122,10 +154,12 @@ public abstract class MemoryGame implements Showable {
 
     protected void reveal(Rectangle card) {
         card.setFill(Color.LIGHTBLUE);
+        symbols.get(card).setVisible(true);
     }
 
     protected void hide(Rectangle card) {
         card.setFill(Color.DARKGRAY);
+        symbols.get(card).setVisible(false);
     }
 
     private void checkMatch() {

@@ -22,17 +22,21 @@ public class QuestionDisplay implements Showable {
 
     private Scene questionScene;
 
-    public QuestionDisplay(Stage primaryStage, Scene gameScene) {
+    // Add a Runnable callback that executes when returning to the game
+    public QuestionDisplay(Stage primaryStage, Scene gameScene, Runnable onReturn) {
 
-        // Layout for the blank question screen
         VBox root = new VBox(20);
         root.setAlignment(Pos.CENTER);
 
         Button backButton = new Button("Back to Game");
 
-        // When clicked, go back to the game scene
         backButton.setOnAction(e -> {
             primaryStage.setScene(gameScene);
+
+            // Restart the timer (or do any needed action)
+            if (onReturn != null) {
+                onReturn.run();
+            }
         });
 
         root.getChildren().add(backButton);

@@ -7,16 +7,20 @@ package final_project;
 * Lab: Group Sustainability Lab
 * Date: 12/10/2025
 *
-* Description: Class for determining the timed mode for this game.
-*              This is the hard difficulty for the game.
+* Description: Class used to describe a hard level of difficulty
+* 				of a game. It extends the main GUI, which is
+* 				MemoryGame.java
 */
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -69,10 +73,13 @@ public class Hard extends MemoryGame {
 
     private void buildTopBar() {
         HBox topBar = new HBox(30);
+        topBar.setPadding(new Insets(50, 0, 20, 0));
         topBar.setAlignment(Pos.CENTER);
 
         scoreLabel.setText("Score: 0");
+        scoreLabel.setFont(Font.font("System", FontWeight.BOLD, 24));
         timerLabel.setText("Time: " + timeRemaining);
+        timerLabel.setFont(Font.font("System", FontWeight.BOLD, 24));
 
         topBar.getChildren().addAll(scoreLabel, timerLabel);
 
@@ -142,7 +149,11 @@ public class Hard extends MemoryGame {
         answerManager.selectQuestion(Question.Type.MULTIPLE_CHOICE);
         Question q = answerManager.getQuestion();
 
-        QuestionDisplay qd = new QuestionDisplay(primaryStage, gameScene);
+        QuestionDisplay qd = new QuestionDisplay(
+        		primaryStage, 
+        		gameScene,
+        		() -> resumeTimer()
+        		);
 
 
         primaryStage.setScene(qd.getScene());
