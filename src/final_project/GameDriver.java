@@ -121,8 +121,8 @@ public class GameDriver extends Application {
 		alert.showAndWait(); // Wait until user clicks "OK" before continuing
 	}
 	
-	public static void main (String[] args) {
-		launch(args);
-	}
+	//public static void main (String[] args) {
+	//	launch(args);
+	//}
 
 }

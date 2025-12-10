@@ -15,6 +15,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+
 public class Answer {
 	private Question1 currentQuestion;
 	// Original question list not to be altered
