@@ -17,22 +17,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Answer {
-	private Question1 currentQuestion;
-	private ArrayList<Question1> trueFalseQuestions; // Original question list not to be altered
-	private ArrayList<Question1> multipleChoiceQuestions;
-	private ArrayList<Question1> gameTFQuestions; // Questions which will be altered during gameplay
-	private ArrayList<Question1> gameMCQuestions;
+	private Question currentQuestion;
+	// Original question list not to be altered
+	private ArrayList<Question> trueFalseQuestions; 
+	private ArrayList<Question> multipleChoiceQuestions;
+	// Questions which will be altered during gameplay
+	private ArrayList<Question> gameTFQuestions; 
+	private ArrayList<Question> gameMCQuestions;
 	
 	public Answer() {
-		trueFalseQuestions = new ArrayList<Question1>();
-		multipleChoiceQuestions = new ArrayList<Question1>();
-		gameTFQuestions = new ArrayList<Question1>();
-		gameMCQuestions = new ArrayList<Question1>();
+		trueFalseQuestions = new ArrayList<Question>();
+		multipleChoiceQuestions = new ArrayList<Question>();
+		gameTFQuestions = new ArrayList<Question>();
+		gameMCQuestions = new ArrayList<Question>();
 	}
 	
 	/// Method for adding questions one by one
-	public void addQuestion(Question1 question) {
-		if (question.getType() == Question1.Type.TRUE_FALSE)
+	public void addQuestion(Question question) {
+		if (question.getType() == Question.Type.TRUE_FALSE)
 			trueFalseQuestions.add(question);
 		else
 			multipleChoiceQuestions.add(question);
@@ -40,16 +42,16 @@ public class Answer {
 	
 	/// Method for loading questions using a file. Takes a file and a question type, then adds the questions to both question lists of the given type (the one that
 	///	doesn't change and the one edited during the game)
-	public void loadQuestions(File file, Question1.Type type) throws FileNotFoundException {
+	public void loadQuestions(File file, Question.Type type) throws FileNotFoundException {
 		Scanner scan = new Scanner(file);
 		String questionString;
 		String topic;
 		String explanation = "default";
 		char correctAnswer;
 		int length;
-		ArrayList<Question1> questionList;
-		ArrayList<Question1> gameQuestionList;
-		if  (type == Question1.Type.TRUE_FALSE) { // two answers for true / false; references the corresponding lists of the given type
+		ArrayList<Question> questionList;
+		ArrayList<Question> gameQuestionList;
+		if  (type == Question.Type.TRUE_FALSE) { // two answers for true / false; references the corresponding lists of the given type
 			length = 2;
 			questionList = trueFalseQuestions;
 			gameQuestionList = gameTFQuestions;
@@ -69,7 +71,7 @@ public class Answer {
 				answers[i] = scan.nextLine();
 			}
 			String correctLine = scan.nextLine();
-			if  (type == Question1.Type.TRUE_FALSE) {
+			if  (type == Question.Type.TRUE_FALSE) {
 				if (correctLine.toLowerCase().equals("true")) {
 					correctAnswer = 'T';
 				}
@@ -78,7 +80,7 @@ public class Answer {
 			}
 			else
 				correctAnswer = correctLine.charAt(0);
-			Question1 question = new Question1(topic,questionString,answers,explanation,type,correctAnswer);
+			Question question = new Question(topic,questionString,answers,explanation,type,correctAnswer);
 			questionList.add(question);
 			gameQuestionList.add(question);
 		}
@@ -87,9 +89,9 @@ public class Answer {
 	}
 	
 	/// Method for adding all questions via a single question ArrayList
-	public void setQuestions(ArrayList<Question1> questions) {
-		for (Question1 question : questions) {
-			if (question.getType() == Question1.Type.TRUE_FALSE)
+	public void setQuestions(ArrayList<Question> questions) {
+		for (Question question : questions) {
+			if (question.getType() == Question.Type.TRUE_FALSE)
 				trueFalseQuestions.add(question);
 			else
 				multipleChoiceQuestions.add(question);
@@ -105,24 +107,24 @@ public class Answer {
 	}
 	
 	/// Getter method that returns the current selected question
-	public Question1 getQuestion() {
+	public Question getQuestion() {
 		return currentQuestion;
 	}
 	
 	/// Getter method that returns the list of true / false questions	
-	public ArrayList<Question1> getTrueFalseQuestions() {
+	public ArrayList<Question> getTrueFalseQuestions() {
 		return trueFalseQuestions;
 	}
 	
 	/// Getter method that returns the list of multiple-choice questions	
-	public ArrayList<Question1> getMultipleChoiceQuestions() {
+	public ArrayList<Question> getMultipleChoiceQuestions() {
 		return multipleChoiceQuestions;
 	}
 	
 	/// Method that randomly selects a question of a given type before removing it from the answer pool (i.e. its respective ArrayList).
-	public void selectQuestion(Question1.Type type) {
+	public void selectQuestion(Question.Type type) {
 		Random rand = new Random();
-		if (type == Question1.Type.TRUE_FALSE) {
+		if (type == Question.Type.TRUE_FALSE) {
 			currentQuestion  = trueFalseQuestions.get(rand.nextInt(trueFalseQuestions.size()));
 			trueFalseQuestions.remove(currentQuestion);
 		}
@@ -132,16 +134,16 @@ public class Answer {
 		}
 	}
 	/// Method which resets either the multiple choice or the true/false question lists used in the game based on the input type.
-	public void refreshQuestions(Question1.Type type) {
-		if (type == Question1.Type.TRUE_FALSE) {
+	public void refreshQuestions(Question.Type type) {
+		if (type == Question.Type.TRUE_FALSE) {
 			gameTFQuestions.clear();
-			for (Question1 question : trueFalseQuestions) {
+			for (Question question : trueFalseQuestions) {
 				gameTFQuestions.add(question);
 			}
 		}
 		else {
 			gameMCQuestions.clear();
-			for (Question1 question : multipleChoiceQuestions) {
+			for (Question question : multipleChoiceQuestions) {
 				gameMCQuestions.add(question);
 			}
 		}
