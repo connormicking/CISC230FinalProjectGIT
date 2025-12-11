@@ -15,9 +15,9 @@ import java.io.FileNotFoundException;
 public class Test {
 	public static void main(String[] args) throws FileNotFoundException {
 		Answer answerManager = new Answer();
-		File file = new File("src/final_project/MCQuestions.txt");
+		File file = new File("MCQuestions.txt");
 		answerManager.loadQuestions(file, Question.Type.MULTIPLE_CHOICE);
-		file = new File("src/final_project/TFQuestions.txt");
+		file = new File("TFQuestions.txt");
 		answerManager.loadQuestions(file, Question.Type.TRUE_FALSE);
 		
 		for (Question question : answerManager.getMultipleChoiceQuestions()) {

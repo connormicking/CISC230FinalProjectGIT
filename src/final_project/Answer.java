@@ -63,7 +63,7 @@ public class Answer {
 		}
 		String[] answers = new String[length];
 
-		
+		// Scan until reaching end of file
 		while (scan.hasNextLine()) {
 			topic = scan.nextLine();
 			questionString = scan.nextLine();
@@ -80,6 +80,7 @@ public class Answer {
 			}
 			else
 				correctAnswer = correctLine.charAt(0);
+			// Create a Question object using the scanned data and add it to the corresponding list
 			Question question = new Question(topic,questionString,answers,explanation,type,correctAnswer);
 			questionList.add(question);
 			gameQuestionList.add(question);

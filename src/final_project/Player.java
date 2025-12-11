@@ -11,7 +11,7 @@ package final_project;
 *
 * 
 */
-public class Player {
+public class Player implements Comparable<Player>{
 	//player variable types
     private String name;
     private int score;
@@ -47,11 +47,22 @@ public class Player {
         if (this.score < 0) this.score = 0; //No negative scores
     }
 
+    // Method used for comparing players based on score
+    public int compareTo(Player player) {
+    	if (this.score == player.getScore()) {
+    		return 0;
+    	}
+    	else if (this.score > player.getScore()) {
+    		return 1;
+    	}
+    	else
+    		return -1;
+    }
 
     // toString method for Leaderboard
     @Override
     public String toString() {
-        return name + ": " + score + " pts";
+        return name + " scored " + score + " pts";
     }
 }
 
