@@ -1,51 +1,35 @@
 package final_project;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-import javafx.geometry.Pos;
-import javafx.stage.Stage;
 
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 /*
-* File: QuestionDisplay.java
-* Author:
+* File: QuestionDisplay
+* Author: Matt
 * Course: CISC230
 * Lab: Group Sustainability Lab
 * Date: 12/7/2025
 *
-* Description:
-*   A blank placeholder scene for displaying questions.
-*   Contains a button to return to the MemoryGame scene.
+* Description:	Class for storing all questions and checking if the user has the correct answer. Selects a current question randomly for then removes it from the
+* 				ArrayList to avoid repeating the question.
+* 
 */
+public class QuestionDisplay implements Showable{
+	
 
-public class QuestionDisplay implements Showable {
 
-    private Scene questionScene;
+@Override
+public Scene getScene() {
+	Button buttonA = new Button();
+	Button buttonB = new Button();
+	Button buttonC = new Button();
+	Button buttonD = new Button();
+	Pane frame = new Pane(buttonA, buttonB, buttonC, buttonD);
+	
+	Scene scene = new Scene (frame, 500, 500);
 
-    // Add a Runnable callback that executes when returning to the game
-    public QuestionDisplay(Stage primaryStage, Scene gameScene, Runnable onReturn) {
+	return scene;
 
-        VBox root = new VBox(20);
-        root.setAlignment(Pos.CENTER);
-
-        Button backButton = new Button("Back to Game");
-
-        backButton.setOnAction(e -> {
-            primaryStage.setScene(gameScene);
-
-            // Restart the timer (or do any needed action)
-            if (onReturn != null) {
-                onReturn.run();
-            }
-        });
-
-        root.getChildren().add(backButton);
-
-        questionScene = new Scene(root, 500, 400);
-    }
-
-    @Override
-    public Scene getScene() {
-        return questionScene;
-    }
-}
+}}
