@@ -49,14 +49,16 @@ public class GameDriver extends Application{
 		// Create buttons and set their handlers
 		Button startButton = new Button("Start Game");
 		Button infoButton = new Button("Info");
+		Button difficultyButton = new Button("Difficulty Info");
 		
+		difficultyButton.setOnAction(this :: difficultyButtonClick);
 		startButton.setOnAction(this :: startButtonClick);
 		// FileNotFoundException try / catch block
 		infoButton.setOnAction(event -> {
 			try {
 				infoButtonClick(event);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				// Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
@@ -86,7 +88,7 @@ public class GameDriver extends Application{
 		HBox buttonBox = new HBox(); // HBox for the two buttons (start and info)
 		buttonBox.setSpacing(10);
 		buttonBox.setAlignment(Pos.CENTER);
-		buttonBox.getChildren().addAll(startButton,infoButton);
+		buttonBox.getChildren().addAll(infoButton,difficultyButton,startButton);
 		
 		// create VBox for storing difficulty text, difficulty buttons, and the buttonBox (containing start and info buttons)
 		VBox difficultyBox = new VBox();
@@ -160,13 +162,22 @@ public class GameDriver extends Application{
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Game Information");
-		alert.setContentText("insert game information here");
+		alert.setContentText("Click to flip cards and reveal symbols! Matching two symbols initiates a sustainability-related question.");
 		alert.showAndWait(); // Wait until user clicks "OK" before continuing
-		Player player = new Player("Alpha");
-		player.setScore(400);
+		// Currently testing leaderboard in this method --> DELETE BEFORE SUBMISSION
+		Player player = new Player("player");
 		Leaderboard leaderboard = new Leaderboard(player);
 		leaderboard.loadPastLeaderboard();
 		stage.setScene(leaderboard.getScene());
+	}
+	
+	public void difficultyButtonClick(ActionEvent event) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Difficulty Information");
+		alert.setContentText("Easy: True / False. Medium: Multiple choice. Hard: Timer with bonus points for speed.");
+		alert.showAndWait(); // Wait until user clicks "OK" before continuing
+	
 	}
 	
 	/// Method used for accessing the primary stage elsewhere (e.g. from the Leaderboard class)
